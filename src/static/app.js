@@ -928,20 +928,24 @@ document.addEventListener("DOMContentLoaded", () => {
   function copyShareLink(activityName, button) {
     const url = getActivityShareUrl(activityName);
     
+    // Function to show success feedback
+    const showSuccessFeedback = () => {
+      const originalIcon = button.querySelector('.share-icon').textContent;
+      button.querySelector('.share-icon').textContent = '✓';
+      button.style.backgroundColor = '#2e7d32';
+      
+      setTimeout(() => {
+        button.querySelector('.share-icon').textContent = originalIcon;
+        button.style.backgroundColor = '';
+      }, 2000);
+      
+      showMessage('Link copied to clipboard!', 'success');
+    };
+    
     // Use the Clipboard API
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(url).then(() => {
-        // Show success feedback
-        const originalIcon = button.querySelector('.share-icon').textContent;
-        button.querySelector('.share-icon').textContent = '✓';
-        button.style.backgroundColor = '#2e7d32';
-        
-        setTimeout(() => {
-          button.querySelector('.share-icon').textContent = originalIcon;
-          button.style.backgroundColor = '';
-        }, 2000);
-        
-        showMessage('Link copied to clipboard!', 'success');
+        showSuccessFeedback();
       }).catch((err) => {
         console.error('Failed to copy:', err);
         showMessage('Failed to copy link', 'error');
@@ -956,16 +960,7 @@ document.addEventListener("DOMContentLoaded", () => {
       textArea.select();
       try {
         document.execCommand('copy');
-        showMessage('Link copied to clipboard!', 'success');
-        
-        const originalIcon = button.querySelector('.share-icon').textContent;
-        button.querySelector('.share-icon').textContent = '✓';
-        button.style.backgroundColor = '#2e7d32';
-        
-        setTimeout(() => {
-          button.querySelector('.share-icon').textContent = originalIcon;
-          button.style.backgroundColor = '';
-        }, 2000);
+        showSuccessFeedback();
       } catch (err) {
         console.error('Failed to copy:', err);
         showMessage('Failed to copy link', 'error');
