@@ -914,7 +914,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function shareOnTwitter(activityName, details) {
     const url = getActivityShareUrl(activityName);
     const text = getShareText(activityName, details);
-    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+    const twitterUrl = `https://x.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
     window.open(twitterUrl, '_blank', 'width=600,height=400');
   }
 
